@@ -1,12 +1,27 @@
 import socket
+import struct
+import sys
+import utils
 
-UDP_IP = "127.0.0.1"
-UDP_PORT = 5005
+class Client():
+    def __init__(self, port):
+        self.client_address = ('', port)
+        self.server_address = ('', 5006)
 
-sock = socket.socket(socket.AF_INET, # Internet
-                     socket.SOCK_DGRAM) # UDP
-sock.bind((UDP_IP, UDP_PORT))
+    def start(self):
+        self.sock = socket.socket(socket.AF_INET, # Internet
+                            socket.SOCK_DGRAM) # UDP
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        self.sock.bind(self.client_address)
 
-while True:
-    data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
-    print("received message:", data.decode())
+    def receiveMessages(self):
+        while True:
+            sent = self.sock.sendto('SYN', self.server_address)
+            utils.log('Waiting to receive message')
+            data, address = self.sock.recvfrom(1024)
+            utils.log('Received: ' + data.decode())
+
+
+client = Client(5005)
+client.start()
+client.receiveMessages()
