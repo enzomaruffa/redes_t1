@@ -1,7 +1,7 @@
 import time
 import datetime
 
-
+MESSAGE_SIZE = 8192
 
 def log(message):
     # print(msg)

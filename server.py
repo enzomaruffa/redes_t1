@@ -3,38 +3,73 @@ import time
 import struct
 import sys
 import utils
+import threading
 
 class Server():
-    def __init__(self, *args, **kwargs):
-        self.server_address = ('', 5006)
-        self.send_to = ('', 5005)
-        # return super().__init__(*args, **kwargs)
+    def __init__(self, server_receiver_port, server_sender_port, timeout, time_between_messages):
 
-    def start(self):
-        self.sock = socket.socket(socket.AF_INET, # Internet
+        utils.log('[Server] Starting server on port ' + str(server_receiver_port))
+
+        self.server_receiver_address = ('', server_receiver_port)
+        self.server_sender_address = ('', server_sender_port)
+
+        self.time_between_messages = time_between_messages
+        self.clients = []
+
+        # Creates the receiver socket
+        self.listener_sock = socket.socket(socket.AF_INET, # Internet
                             socket.SOCK_DGRAM, # UDP
                             socket.IPPROTO_UDP)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        self.listener_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.listener_sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
-        self.sock.settimeout(0.2);
-        self.sock.bind(self.server_address)
+        #self.listener_sock.settimeout(timeout)
+        self.listener_sock.bind(self.server_receiver_address)
 
+        # Creates the sender socket
+        self.sender_sock = socket.socket(socket.AF_INET, # Internet
+                            socket.SOCK_DGRAM, # UDP
+                            socket.IPPROTO_UDP)
+        self.sender_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.sender_sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
-    def sendMessages(self):
+        self.sender_sock.settimeout(timeout)
+        self.sender_sock.bind(self.server_sender_address)
+
+        # ====
+ 
+        self.handler_thread = threading.Thread(target=self.receive_messages, args=())
+        self.handler_thread.start()
+
+        self.sender_thread = threading.Thread(target=self.send_messages, args=())
+        self.sender_thread.start()
+
+        # return super().__init__(*args, **kwargs)
+
+    def receive_messages(self):
+        while True:
+            data, address = self.listener_sock.recvfrom(utils.MESSAGE_SIZE)
+            utils.log('[Server] Received message: ' + data.decode())
+            self.clients.append(address) #address example: ('127.0.0.1', 57121)
+
+    def send_messages(self):
         try:
             i = 0
             while True:
-                data, address = self.sock.recvfrom(8192)
                 message = str(i)
                 i+=1
-                utils.log('Sending message: ' + message)
-                sent = self.sock.sendto(message.encode(), self.send_to)
-                time.sleep(1)
+                for client in self.clients:
+                    utils.log('[Server] Sending to client (' + client[0] + ', ' + str(client[1]) + ') the message: ' + message)
+                    sent = self.sender_sock.sendto(message.encode(), client)
+                time.sleep(self.time_between_messages)
         finally:
-            utils.log('Closin socket')
-            self.sock.close()
+            utils.log('[Server] Closing socket')
+            self.sender_sock.close()
 
-server = Server()
-server.start()
-server.sendMessages()
+
+if len(sys.argv) != 4:
+    print("Invalid start arguments. Please, start the server as 'python3 server.py <server_receiver_port> <server_sender_port> <time_between_messages>' ")
+    exit(1)
+
+server = Server(int(sys.argv[1]), int(sys.argv[2]), 5, int(sys.argv[3]))
+server.sender_thread.join()

@@ -4,9 +4,9 @@ import sys
 import utils
 
 class Client():
-    def __init__(self, port):
+    def __init__(self, port, server_ip, server_port):
         self.client_address = ('', port)
-        self.server_address = ('', 5006)
+        self.server_address = (server_ip, server_port)
 
     def start(self):
         self.sock = socket.socket(socket.AF_INET, # Internet
@@ -14,14 +14,19 @@ class Client():
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         self.sock.bind(self.client_address)
 
-    def receiveMessages(self):
+        sent = self.sock.sendto('SYN'.encode(), self.server_address)
+
+    def received_messages(self):
         while True:
-            sent = self.sock.sendto('SYN', self.server_address)
-            utils.log('Waiting to receive message')
-            data, address = self.sock.recvfrom(1024)
-            utils.log('Received: ' + data.decode())
+            utils.log('[Client] Waiting to receive message')
+            data, address = self.sock.recvfrom(utils.MESSAGE_SIZE)
+            utils.log('[Client] Received: ' + data.decode())
 
 
-client = Client(5005)
+if len(sys.argv) != 4:
+    print("Invalid start arguments. Please, start the client as 'python3 client.py <client_port> <server_ip> <server_port>' ")
+    exit(1)
+
+client = Client(int(sys.argv[1]), sys.argv[2], int(sys.argv[3]))
 client.start()
-client.receiveMessages()
+client.received_messages()
