@@ -3,6 +3,7 @@ import time
 import struct
 import sys
 import utils
+from message import Message
 import threading
 
 class Server():
@@ -15,6 +16,8 @@ class Server():
 
         self.time_between_messages = time_between_messages
         self.clients = []
+
+        self.last_message_id = -1
 
         # Creates the receiver socket
         self.listener_sock = socket.socket(socket.AF_INET, # Internet
@@ -44,6 +47,8 @@ class Server():
         self.sender_thread = threading.Thread(target=self.send_messages, args=())
         self.sender_thread.start()
 
+
+
         # return super().__init__(*args, **kwargs)
 
     def receive_messages(self):
@@ -56,11 +61,14 @@ class Server():
         try:
             i = 0
             while True:
-                message = str(i)
+                message_payload = i
                 i+=1
+                message = Message(self.last_message_id, message_payload)
                 for client in self.clients:
-                    utils.log('[Server] Sending to client (' + client[0] + ', ' + str(client[1]) + ') the message: ' + message)
-                    sent = self.sender_sock.sendto(message.encode(), client)
+                    utils.log('[Server] Sending to client (' + client[0] + ', ' + str(client[1]) + ') the message: ' + str(message))
+                    sent = self.sender_sock.sendto(message.pack(), client)
+
+                self.last_message_id += 1
                 time.sleep(self.time_between_messages)
         finally:
             utils.log('[Server] Closing socket')

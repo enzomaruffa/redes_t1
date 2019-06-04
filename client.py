@@ -2,11 +2,15 @@ import socket
 import struct
 import sys
 import utils
+from message import Message
 
 class Client():
+
     def __init__(self, port, server_ip, server_port):
         self.client_address = ('', port)
         self.server_address = (server_ip, server_port)
+
+        self.last_message_id = -1
 
     def start(self):
         self.sock = socket.socket(socket.AF_INET, # Internet
@@ -20,7 +24,12 @@ class Client():
         while True:
             utils.log('[Client] Waiting to receive message')
             data, address = self.sock.recvfrom(utils.MESSAGE_SIZE)
-            utils.log('[Client] Received: ' + data.decode())
+            
+            message = Message.unpack(data)
+
+            #TODO: handle packet loss
+
+            utils.log('[Client] Received: ' + str(message))
 
 
 if len(sys.argv) != 4:
