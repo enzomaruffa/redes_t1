@@ -53,7 +53,8 @@ class Server():
         while True:
             data, address = self.listener_sock.recvfrom(utils.MESSAGE_SIZE)
             utils.log('[Server] Received message: ' + data.decode())
-            self.clients.append(address) #address example: ('127.0.0.1', 57121)
+            if address not in self.clients:
+                self.clients.append(address) #address example: ('127.0.0.1', 57121)
 
     def send_messages(self):
         try:

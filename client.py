@@ -19,6 +19,7 @@ class Client():
         self.sock = socket.socket(socket.AF_INET, # Internet
                             socket.SOCK_DGRAM) # UDP
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        self.sock.settimeout(60)
         self.sock.bind(self.client_address)
 
         sent = self.sock.sendto('SYN'.encode(), self.server_address)
@@ -47,8 +48,11 @@ class Client():
             if len(self.lost_packets) > 5:
                 break
 
-        utils.log('[Client] Finished transmission because too many packets were lost!' + str(lost_packets))
+        utils.log('[Client] Finished transmission because too many packets were lost!' + str(self.lost_packets))
 
+    def create_statistics(self):
+        utils.log('[Client] Statistics - Lost packets: ' +  str(len(self.lost_packets)))
+        utils.log('[Client] Statistics - Delayed packets: ' +  str(len(self.delayed_packets)))
 
 
 if len(sys.argv) != 4:
@@ -58,3 +62,4 @@ if len(sys.argv) != 4:
 client = Client(int(sys.argv[1]), sys.argv[2], int(sys.argv[3]))
 client.start()
 client.received_messages()
+client.create_statistics()
