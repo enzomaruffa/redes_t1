@@ -47,8 +47,6 @@ class Server():
         self.sender_thread = threading.Thread(target=self.send_messages, args=())
         self.sender_thread.start()
 
-
-
         # return super().__init__(*args, **kwargs)
 
     def receive_messages(self):
@@ -79,5 +77,5 @@ if len(sys.argv) != 4:
     print("Invalid start arguments. Please, start the server as 'python3 server.py <server_receiver_port> <server_sender_port> <time_between_messages>' ")
     exit(1)
 
-server = Server(int(sys.argv[1]), int(sys.argv[2]), 5, int(sys.argv[3]))
+server = Server(int(sys.argv[1]), int(sys.argv[2]), 5, float(sys.argv[3]))
 server.sender_thread.join()
