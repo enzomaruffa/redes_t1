@@ -47,6 +47,8 @@ class Client():
             #### testing only
             if len(self.lost_packets) > 5:
                 break
+            if (self.last_message_id > 200):
+                exit(0)
 
         utils.log('[Client] Finished transmission because too many packets were lost!' + str(self.lost_packets))
 

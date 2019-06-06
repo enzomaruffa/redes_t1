@@ -69,6 +69,8 @@ class Server():
 
                 self.last_message_id += 1
                 time.sleep(self.time_between_messages)
+                if (i > 50):
+                    exit(0)
         finally:
             utils.log('[Server] Closing socket')
             self.sender_sock.close()
