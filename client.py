@@ -13,6 +13,7 @@ class Client():
         self.server_address = (server_ip, server_port)
 
         self.last_message_id = -1
+        self.received_packets = 0
         self.lost_packets = []
         self.delayed_packets = []
 
@@ -37,6 +38,7 @@ class Client():
             data, address = self.sock.recvfrom(utils.MESSAGE_SIZE)
             
             message = Message.unpack(data)
+            self.received_packets += 1
 
             #handles packet loss
             if message.id < self.last_message_id:
@@ -53,11 +55,13 @@ class Client():
 
             #### testing only
             if len(self.lost_packets) > 5:
+                utils.log('[Client] Finished transmission because too many packets were lost!' + str(self.lost_packets))
                 break
 
-        utils.log('[Client] Finished transmission because too many packets were lost!' + str(self.lost_packets))
 
     def create_statistics(self):
+        utils.log('[Client] Statistics - Total received packets: ' +  str((self.received_packets)))
+        utils.log('[Client] Statistics - Total received packets on time: ' +  str(self.received_packets - len(self.delayed_packets)))
         utils.log('[Client] Statistics - Lost packets: ' +  str(len(self.lost_packets)))
         utils.log('[Client] Statistics - Delayed packets: ' +  str(len(self.delayed_packets)))
 
