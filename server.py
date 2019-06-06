@@ -18,6 +18,7 @@ class Server():
         self.clients = []
 
         self.last_message_id = -1
+        self.running = True
 
         # Creates the receiver socket
         self.listener_sock = socket.socket(socket.AF_INET, # Internet
@@ -59,7 +60,7 @@ class Server():
     def send_messages(self):
         try:
             i = 0
-            while True:
+            while self.running:
                 message_payload = i
                 i+=1
                 message = Message(self.last_message_id, message_payload)
@@ -79,4 +80,24 @@ if len(sys.argv) != 4:
     exit(1)
 
 server = Server(int(sys.argv[1]), int(sys.argv[2]), 5, float(sys.argv[3]))
-server.sender_thread.join()
+
+running = True
+
+print("Server Menu! Use 'play' to play stream, 'pause' to pause stream and 'finish' to end stream!")
+while running:
+    input_text = input()
+    if input_text == "play":
+        print("Setting stream status to playing!")
+        server.running = True
+    elif input_text == "pause":
+        print("Setting stream status to paused!")
+        server.running = False
+    elif input_text == "finish":
+        print("Finishing stream...")
+        server.running = False
+        running = False
+    else: 
+        print("Unknown command")
+
+
+print("Finished streaming")
