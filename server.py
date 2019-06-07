@@ -94,21 +94,27 @@ server = Server(int(sys.argv[1]), int(sys.argv[2]), 5, float(sys.argv[3]))
 running = True
 
 print("Server Menu! Use 'p' to play stream, 's' to pause stream and 'f' to end stream!")
-while running:
-    input_text = input()
-    if input_text == "p":
-        print("Setting stream status to playing!")
-        server.streaming = True
-    elif input_text == "s":
-        print("Setting stream status to paused!")
-        server.streaming = False
-    elif input_text == "f":
-        print("Finishing stream...")
-        server.listener_sock.close()
-        server.running = False
-        running = False
-    else: 
-        print("Unknown command")
+try:
+    while running:
+        input_text = input()
+        if input_text == "p":
+            print("Setting stream status to playing!")
+            server.streaming = True
+        elif input_text == "s":
+            print("Setting stream status to paused!")
+            server.streaming = False
+        elif input_text == "f":
+            print("Finishing stream...")
+            server.listener_sock.close()
+            server.running = False
+            running = False
+        else: 
+            print("Unknown command")
+except KeyboardInterrupt:
+    server.listener_sock.close()
+    server.running = False
+    running = False
+    print("Finishing stream...")
 
 print("Finished streaming")
 

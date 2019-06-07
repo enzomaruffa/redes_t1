@@ -13,7 +13,8 @@ from graph import GraphInstance
 class Client():
 
     def __init__(self, port, server_ip, server_port):
-        self.client_address = ('', port)
+        self.client_address = (socket.gethostname(), port)
+        
         self.server_address = (server_ip, server_port)
 
         self.last_message_id = -1
@@ -25,7 +26,7 @@ class Client():
 
         self.running = True
 
-        self.graph = GraphInstance()
+        self.graph = GraphInstance(self.client_address)
 
         # ===
 
@@ -47,6 +48,9 @@ class Client():
             utils.log('[Client] Waiting to receive message')
             data, address = self.sock.recvfrom(utils.MESSAGE_SIZE)
             
+            if not running: #após cancelar, pode acabar pegando alguma mensagem ainda
+                break
+
             message = Message.unpack(data)
             self.received_packets += 1
 
@@ -86,18 +90,25 @@ client = Client(int(sys.argv[1]), sys.argv[2], int(sys.argv[3]))
 
 running = True
 
-ani = animation.FuncAnimation(client.graph.fig, client.graph.graph_animation, fargs=(1, client.received_values), interval=1000)
+print("Client Menu! Close figure to exit stream and see stats!")
+
+def handle_close(evt):
+    global running
+
+    print("Exiting stream...")
+    client.running = False
+    running = False
+    print(client.sock)
+    client.sock.shutdown(socket.SHUT_WR)
+    client.sock.close()
+
+ani = animation.FuncAnimation(client.graph.fig, client.graph.graph_animation, fargs=(1, client.received_values), interval=100)
+client.graph.fig.canvas.mpl_connect('close_event', handle_close)
+
 plt.show()
 
-print("Client Menu! Use 'e' to exist stream and see stats!")
 while running:
-    input_text = input()
-    if input_text == "e":
-        print("Exiting stream...")
-        client.running = False
-        running = False
-    else: 
-        print("Unknown command")
+    continue
 
 print("Exited streaming")
 
