@@ -5,12 +5,13 @@ import sys
 import utils
 from message import Message
 import threading
+import numpy as np
 import random
 
 class Server():
     def __init__(self, server_receiver_port, server_sender_port, timeout, time_between_messages):
 
-        utils.log('[Server] Starting server on port ' + str(server_receiver_port))
+        utils.log('[Servevidor] Iniciando servidor na porta ' + str(server_receiver_port))
 
         self.server_receiver_address = ('', server_receiver_port)
         self.server_sender_address = ('', server_sender_port)
@@ -58,63 +59,68 @@ class Server():
         try: 
             while self.running:
                 data, address = self.listener_sock.recvfrom(utils.MESSAGE_SIZE)
-                utils.log('[Server] Received message: ' + data.decode())
+                utils.log('[Servidor] Mensagem recebida: ' + data.decode())
                 if address not in self.clients:
                     self.clients.append(address) #address example: ('127.0.0.1', 57121)
         except Exception:
-           utils.log('[Server] Closing receiver socket')
+           utils.log('[Servidor] Fechando socket para novos clientes...')
 
     def send_messages(self):
         try:
             i = 0
+            starting_value = random.randint(100,1000)
             while self.running:
                 if self.streaming:
-                    message_payload = random.randint(1,101)
+
+                    message_payload = starting_value
+
                     i+=1
+                    starting_value += starting_value * np.random.normal(loc = 0, scale = 0.09)
+                    if starting_value <= 0:
+                        starting_value += random.randint(1,10)
                     
                     self.sent_values.append(message_payload)
                     message = Message(self.last_message_id, message_payload)
                     for client in self.clients:
-                        utils.log('[Server] Sending to client (' + client[0] + ', ' + str(client[1]) + ') the message: ' + str(message))
+                        utils.log('[Servidor] Enviando para o cliente (' + client[0] + ', ' + str(client[1]) + ') a mensagem: ' + str(message))
                         sent = self.sender_sock.sendto(message.pack(), client)
 
                     self.last_message_id += 1
                     time.sleep(self.time_between_messages)
         finally:
-            utils.log('[Server] Closing sender socket')
+            utils.log('[Servidor] Fechando socket de envio...')
             self.sender_sock.close()
 
 
 if len(sys.argv) != 4:
-    print("Invalid start arguments. Please, start the server as 'python3 server.py <server_receiver_port> <server_sender_port> <time_between_messages>' ")
+    print("Inicialização errada! Por favor, inicie o servidor com 'python3 server.py <porta_escuta_servidor> <porta_envio_servidor> <tempo_entre_mensagens>' ")
     exit(1)
 
 server = Server(int(sys.argv[1]), int(sys.argv[2]), 5, float(sys.argv[3]))
 
 running = True
 
-print("Server Menu! Use 'p' to play stream, 's' to pause stream and 'f' to end stream!")
+print("Menu do servidor! Use 'p' para despausar o stream, 's' para pausar e 'f' para finalizar!")
 try:
     while running:
         input_text = input()
         if input_text == "p":
-            print("Setting stream status to playing!")
+            print("Rodando stream!")
             server.streaming = True
         elif input_text == "s":
-            print("Setting stream status to paused!")
+            print("Pausando stream!")
             server.streaming = False
         elif input_text == "f":
-            print("Finishing stream...")
+            print("Finalizando stream...")
             server.listener_sock.close()
             server.running = False
             running = False
         else: 
-            print("Unknown command")
+            print("Comando desconhecido")
 except KeyboardInterrupt:
     server.listener_sock.close()
     server.running = False
     running = False
-    print("Finishing stream...")
+    print("Finalizando stream...")
 
-print("Finished streaming")
-
+print("Streaming finalizado!")

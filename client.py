@@ -3,6 +3,9 @@ import struct
 import sys
 
 import threading
+
+import numpy as np
+
 from message import Message
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -45,7 +48,7 @@ class Client():
 
     def receive_messages(self):
         while self.running:
-            utils.log('[Client] Waiting to receive message')
+            utils.log('[Cliente] Aguardando mensagem...')
             data, address = self.sock.recvfrom(utils.MESSAGE_SIZE)
             
             if not running: #após cancelar, pode acabar pegando alguma mensagem ainda
@@ -65,41 +68,40 @@ class Client():
     
             self.last_message_id = message.id
 
-            utils.log('[Client] Received: ' + str(message))
+            utils.log('[Cliente] Recebido: ' + str(message))
 
             self.received_values.append(message.payload)
 
             #### testing only
             if len(self.lost_packets) > 5:
-                utils.log('[Client] Finished transmission because too many packets were lost!' + str(self.lost_packets))
+                utils.log('[Cliente] Transmissão finalizada pois muitas mensagens foram perdidas! Mensagens perdidas: ' + str(self.lost_packets))
                 break
 
 
     def create_statistics(self):
-        utils.log('[Client] Statistics - Total received packets: ' +  str((self.received_packets)))
-        utils.log('[Client] Statistics - Total received packets on time: ' +  str(self.received_packets - len(self.delayed_packets)))
-        utils.log('[Client] Statistics - Lost packets: ' +  str(len(self.lost_packets)))
-        utils.log('[Client] Statistics - Delayed packets: ' +  str(len(self.delayed_packets)))
+        utils.log('[Cliente] Estatísticas - Total de mensagens recebidas: ' +  str((self.received_packets)))
+        utils.log('[Cliente] Estatísticas - Total de mensagens recebidas no momento certo: ' +  str(self.received_packets - len(self.delayed_packets)))
+        utils.log('[Cliente] Estatísticas - Mensagens perdidas: ' +  str(len(self.lost_packets)))
+        utils.log('[Cliente] Estatísticas - Mensagens atrasadas: ' +  str(len(self.delayed_packets)))
 
 
 if len(sys.argv) != 4:
-    print("Invalid start arguments. Please, start the client as 'python3 client.py <client_port> <server_ip> <server_port>' ")
+    print("Inicialização errada! Por favor, inicie o cliente com 'python3 client.py <porta_cliente> <ip_servidor> <porta_servidor>' ")
     exit(1)
 
 client = Client(int(sys.argv[1]), sys.argv[2], int(sys.argv[3]))
 
 running = True
 
-print("Client Menu! Close figure to exit stream and see stats!")
+print("Menu do Cliente! Feche o gráfico para calcular as estatísticas")
 
 def handle_close(evt):
     global running
 
-    print("Exiting stream...")
+    print("Finalizando stream......")
     client.running = False
     running = False
-    print(client.sock)
-    client.sock.shutdown(socket.SHUT_WR)
+    client.sock.shutdown(socket.SHUT_RD)
     client.sock.close()
 
 ani = animation.FuncAnimation(client.graph.fig, client.graph.graph_animation, fargs=(1, client.received_values), interval=100)
@@ -110,6 +112,19 @@ plt.show()
 while running:
     continue
 
-print("Exited streaming")
+print("Finalizando streaming")
+
+print("Calculando regressão linear...")
+
+regression_coefficient = np.polyfit(list(range(0, len(client.received_values))), client.received_values, 1)[1]
+
+if regression_coefficient < 1:
+    print("\nCuidado! As ações vão cair no futuro.... Não recomendo a compra! O coeficiente de crescimento foi de ", regression_coefficient, "\n")
+elif regression_coefficient > 0:
+    print("\nCOMPRE COMPRE COMPRE! As ações vão crescer muitooooo!! O coeficiente de crescimento foi de ", regression_coefficient, "\n")
+else:
+    print("\nHmmm, você que sabe. As ações ficarão estáveis! O coeficiente de crescimento foi de ", regression_coefficient, "\n")
+
 
 client.create_statistics()
+

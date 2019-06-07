@@ -15,6 +15,6 @@ class Message():
         return pickle.loads(message_string)
 
     def __str__(self):
-        rep = "[Message] "
+        rep = "[Mensagem] "
         rep += "id: " + str(self.id) + " | payload: " + str(self.payload) + "\n"
         return rep
