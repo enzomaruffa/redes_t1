@@ -5,6 +5,7 @@ import sys
 import utils
 from message import Message
 import threading
+import random
 
 class Server():
     def __init__(self, server_receiver_port, server_sender_port, timeout, time_between_messages):
@@ -16,6 +17,8 @@ class Server():
 
         self.time_between_messages = time_between_messages
         self.clients = []
+
+        self.sent_values = []
 
         self.last_message_id = -1
         self.running = True
@@ -66,8 +69,10 @@ class Server():
             i = 0
             while self.running:
                 if self.streaming:
-                    message_payload = i
+                    message_payload = random.randint(1,101)
                     i+=1
+                    
+                    self.sent_values.append(message_payload)
                     message = Message(self.last_message_id, message_payload)
                     for client in self.clients:
                         utils.log('[Server] Sending to client (' + client[0] + ', ' + str(client[1]) + ') the message: ' + str(message))
@@ -92,22 +97,28 @@ server = Server(int(sys.argv[1]), int(sys.argv[2]), 5, float(sys.argv[3]))
 
 running = True
 
-print("Server Menu! Use 'play' to play stream, 'pause' to pause stream and 'finish' to end stream!")
-while running:
-    input_text = input()
-    if input_text == "play":
-        print("Setting stream status to playing!")
-        server.streaming = True
-    elif input_text == "pause":
-        print("Setting stream status to paused!")
-        server.streaming = False
-    elif input_text == "finish":
-        print("Finishing stream...")
-        server.listener_sock.close()
-        server.running = False
-        running = False
-    else: 
-        print("Unknown command")
+print("Server Menu! Use 'p' to play stream, 's' to pause stream and 'f' to end stream!")
+try:
+    while running:
+        input_text = input()
+        if input_text == "p":
+            print("Setting stream status to playing!")
+            server.streaming = True
+        elif input_text == "s":
+            print("Setting stream status to paused!")
+            server.streaming = False
+        elif input_text == "f":
+            print("Finishing stream...")
+            server.listener_sock.close()
+            server.running = False
+            running = False
+        else: 
+            print("Unknown command")
+except KeyboardInterrupt:
+    server.listener_sock.close()
+    server.running = False
+    running = False
+    print("Finishing stream...")
 
 print("Finished streaming")
 
