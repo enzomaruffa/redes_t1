@@ -11,6 +11,12 @@ import random
 
 class Server():
     def __init__(self, server_receiver_port, server_sender_port, timeout, time_between_messages, output_file='stdout'):
+        self.server_receiver_address = ('', server_receiver_port)
+        self.server_sender_address = ('', server_sender_port)
+
+        self.time_between_messages = time_between_messages
+        self.clients = []
+        
         # ===
         self.log_output_file = open(output_file, 'w')
         self.log_output_file.flush()
