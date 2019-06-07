@@ -8,19 +8,15 @@ import threading
 import numpy as np
 import random
 
+
 class Server():
     def __init__(self, server_receiver_port, server_sender_port, timeout, time_between_messages, output_file='stdout'):
         # ===
         self.log_output_file = open(output_file, 'w')
         self.log_output_file.flush()
-        
-        utils.log('[Servidor] Iniciando servidor na porta ' + str(server_receiver_port), optional_output_file=self.log_output_file)
 
-        self.server_receiver_address = ('', server_receiver_port)
-        self.server_sender_address = ('', server_sender_port)
-
-        self.time_between_messages = time_between_messages
-        self.clients = []
+        utils.log('[Servidor] Iniciando servidor na porta ' +
+                  str(server_receiver_port), optional_output_file=self.log_output_file)
 
         self.sent_values = []
 
@@ -29,18 +25,20 @@ class Server():
         self.streaming = True
 
         # Creates the receiver socket
-        self.listener_sock = socket.socket(socket.AF_INET, # Internet
-                            socket.SOCK_DGRAM, # UDP
+        self.listener_sock = socket.socket(socket.AF_INET,  # Internet
+                            socket.SOCK_DGRAM,  # UDP
                             socket.IPPROTO_UDP)
-        self.listener_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.listener_sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        self.listener_sock.setsockopt(
+            socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.listener_sock.setsockopt(
+            socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
-        #self.listener_sock.settimeout(timeout)
+        # self.listener_sock.settimeout(timeout)
         self.listener_sock.bind(self.server_receiver_address)
 
         # Creates the sender socket
-        self.sender_sock = socket.socket(socket.AF_INET, # Internet
-                            socket.SOCK_DGRAM, # UDP
+        self.sender_sock = socket.socket(socket.AF_INET,  # Internet
+                            socket.SOCK_DGRAM,  # UDP
                             socket.IPPROTO_UDP)
         self.sender_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sender_sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
@@ -49,11 +47,13 @@ class Server():
         self.sender_sock.bind(self.server_sender_address)
 
         # ====
- 
-        self.handler_thread = threading.Thread(target=self.receive_messages, args=())
+
+        self.handler_thread = threading.Thread(
+            target=self.receive_messages, args=())
         self.handler_thread.start()
 
-        self.sender_thread = threading.Thread(target=self.send_messages, args=())
+        self.sender_thread = threading.Thread(
+            target=self.send_messages, args=())
         self.sender_thread.start()
 
         # return super().__init__(*args, **kwargs)
@@ -62,28 +62,45 @@ class Server():
         try: 
             while self.running:
                 data, address = self.listener_sock.recvfrom(utils.MESSAGE_SIZE)
-                utils.log('[Servidor] Mensagem recebida: ' + data.decode(), optional_output_file=self.log_output_file)
-                if address not in self.clients:
-                    self.clients.append(address) #address example: ('127.0.0.1', 57121)
+                message = Message.unpack(data)
+                utils.log('[Servidor] Mensagem recebida: ' + str(message), optional_output_file=self.log_output_file)
+
+                utils.log('[Servidor] Mensagem recebida: ' + str(message))
+
+                if message.message_type == "sync":
+                    if address not in self.clients:
+                        utils.log('[Servidor] Adicionando o cliente (' + address[0] + ', ' + str(address[1]) + ') na lista', optional_output_file=self.log_output_file)
+                        self.clients.append(address) #address example: ('127.0.0.1', 57121)
+                elif message.message_type == "end":
+                    if address in self.clients:
+                        utils.log('[Servidor] Removendo o cliente (' + address[0] + ', ' + str(address[1]) + ') da lista', optional_output_file=self.log_output_file)
+                        
+                        self.clients.remove(address) #address example: ('127.0.0.1', 57121)
+
+                        message = Message(self.last_message_id, "end", "bye!")
+                        self.last_message_id += 1
+                        self.listener_sock.sendto(message.pack(), address)
+
+                        utils.log('[Servidor] Enviando para o cliente (' + address[0] + ', ' + str(address[1]) + ') a mensagem: ' + str(message), optional_output_file=self.log_output_file)
+                        
+                    
         except Exception:
            utils.log('[Servidor] Fechando socket para novos clientes...', optional_output_file=self.log_output_file)
 
     def send_messages(self):
         try:
-            i = 0
             starting_value = random.randint(100,1000)
             while self.running:
                 if self.streaming:
 
                     message_payload = starting_value
 
-                    i+=1
                     starting_value += starting_value * np.random.normal(loc = 0, scale = 0.09)
-                    if starting_value <= 0:
+                    if starting_value <= 10:
                         starting_value += random.randint(1,10)
                     
                     self.sent_values.append(message_payload)
-                    message = Message(self.last_message_id, message_payload)
+                    message = Message(self.last_message_id, "data", message_payload)
                     for client in self.clients:
                         utils.log('[Servidor] Enviando para o cliente (' + client[0] + ', ' + str(client[1]) + ') a mensagem: ' + str(message), optional_output_file=self.log_output_file)
                         sent = self.sender_sock.sendto(message.pack(), client)

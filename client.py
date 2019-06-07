@@ -41,7 +41,7 @@ class Client():
         self.sock = socket.socket(socket.AF_INET, # Internet
                             socket.SOCK_DGRAM) # UDP
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        self.sock.settimeout(60)
+        self.sock.setblocking(3)
         self.sock.bind(self.client_address)
 
         # ====
@@ -49,7 +49,9 @@ class Client():
         self.handler_thread = threading.Thread(target=self.receive_messages, args=())
         self.handler_thread.start()
 
-        sent = self.sock.sendto('SYN'.encode(), self.server_address)
+        sent = self.sock.sendto(Message(0, "sync", "").pack(), self.server_address)
+
+        print("Menu do Cliente! Feche o gráfico para calcular as estatísticas")
 
     def receive_messages(self):
         while self.running:
@@ -62,20 +64,21 @@ class Client():
             message = Message.unpack(data)
             self.received_packets += 1
 
-            #handles packet loss
-            if message.id < self.last_message_id:
-                # delayed
-                self.delayed_packets.append(message.id)
-            elif message.id > self.last_message_id + 1:
-                # lost a few between
-                if self.last_message_id != -1: #
-                    self.lost_packets += list(range(self.last_message_id + 1, message.id)) #creates a range [last + 1, message_id[
+            if message.message_type == "data":
+                #handles packet loss
+                if message.id < self.last_message_id:
+                    # delayed
+                    self.delayed_packets.append(message.id)
+                elif message.id > self.last_message_id + 1:
+                    # lost a few between
+                    if self.last_message_id != -1: #
+                        self.lost_packets += list(range(self.last_message_id + 1, message.id)) #creates a range [last + 1, message_id[
+
+                self.received_values.append(message.payload)
     
             self.last_message_id = message.id
 
             utils.log('[Cliente] Recebido: ' + str(message), optional_output_file=self.log_output_file)
-
-            self.received_values.append(message.payload)
 
             #### testing only
             if len(self.lost_packets) > 5:
@@ -88,6 +91,30 @@ class Client():
         utils.log('[Cliente] Estatísticas - Mensagens perdidas: ' +  str(len(self.lost_packets)), optional_output_file=self.log_output_file)
         utils.log('[Cliente] Estatísticas - Mensagens atrasadas: ' +  str(len(self.delayed_packets)), optional_output_file=self.log_output_file)
 
+        print("\n\n")
+
+    def handle_close(self, evt):
+        global running
+
+        self.sock.sendto(Message(1, "end", "").pack(), self.server_address)
+        
+        print("[Cliente] Finalizando stream......")
+        client.running = False
+        running = False
+
+        print("[Cliente] Finalizando streaming")
+        print("[Cliente] Calculando regressão linear...")
+
+        regression_coefficient = np.polyfit(list(range(0, len(client.received_values))), client.received_values, 1)[0]
+
+        if regression_coefficient < 1:
+            print("\nCuidado! As ações vão cair no futuro.... Não recomendo a compra! O coeficiente de crescimento foi de ", regression_coefficient, "\n")
+        elif regression_coefficient > 0:
+            print("\nCOMPRE COMPRE COMPRE! As ações vão crescer muitooooo!! O coeficiente de crescimento foi de ", regression_coefficient, "\n")
+        else:
+            print("\nHmmm, você que sabe. As ações ficarão estáveis! O coeficiente de crescimento foi de ", regression_coefficient, "\n")
+
+
 
 if (len(sys.argv) != 4) and (len(sys.argv) != 5):
     print("Inicialização errada! Por favor, inicie o cliente com 'python3 client.py <porta_cliente> <ip_servidor> <porta_servidor>' ")
@@ -98,38 +125,17 @@ else:
     client = Client(int(sys.argv[1]), sys.argv[2], int(sys.argv[3]))
 running = True
 
-print("Menu do Cliente! Feche o gráfico para calcular as estatísticas")
-
-def handle_close(evt):
-    global running
-
-    print("Finalizando stream......")
-    client.running = False
-    running = False
-    client.sock.shutdown(socket.SHUT_RD)
-    client.sock.close()
-
 ani = animation.FuncAnimation(client.graph.fig, client.graph.graph_animation, fargs=(1, client.received_values), interval=100)
-client.graph.fig.canvas.mpl_connect('close_event', handle_close)
+client.graph.fig.canvas.mpl_connect('close_event', client.handle_close)
 
 plt.show()
 
 while running:
     continue
 
-print("Finalizando streaming")
-
-print("Calculando regressão linear...")
-
-regression_coefficient = np.polyfit(list(range(0, len(client.received_values))), client.received_values, 1)[1]
-
-if regression_coefficient < 1:
-    print("\nCuidado! As ações vão cair no futuro.... Não recomendo a compra! O coeficiente de crescimento foi de ", regression_coefficient, "\n")
-elif regression_coefficient > 0:
-    print("\nCOMPRE COMPRE COMPRE! As ações vão crescer muitooooo!! O coeficiente de crescimento foi de ", regression_coefficient, "\n")
-else:
-    print("\nHmmm, você que sabe. As ações ficarão estáveis! O coeficiente de crescimento foi de ", regression_coefficient, "\n")
-
-
+#client.handler_thread.join()
 client.create_statistics()
 
+client.sock.close()
+
+print("========= FIM DA EXECUÇÃO =========\n\n")

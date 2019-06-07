@@ -6,13 +6,14 @@ class GraphInstance():
         fig = plt.figure()
         ax = fig.add_subplot(1, 1, 1)
         
+        self.drawing = True
+
         self.fig = fig
         self.ax = ax
         self.title = client_address[0] + ", " + str(client_address[1])
 
     def graph_animation(self, i, temp, ys):
         # Draw x and y lists
-
         y = ys.copy()
 
         x = list(range(0, len(y)))
@@ -27,5 +28,5 @@ class GraphInstance():
         plt.xticks(rotation=45, ha='right')
         plt.subplots_adjust(bottom=0.30)
         plt.title(self.title)
-        plt.ylabel('Market Cap do Canil do Reino')
+        plt.ylabel('Market Cap do Canil dos Outros Reinos')
         plt.xlabel('Tempo decorrido')
