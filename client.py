@@ -1,12 +1,16 @@
 import socket
 import struct
 import sys
-import utils
+
 import threading
 from message import Message
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+import utils
+from graph import GraphInstance
 
 class Client():
-
 
     def __init__(self, port, server_ip, server_port):
         self.client_address = ('', port)
@@ -17,7 +21,13 @@ class Client():
         self.lost_packets = []
         self.delayed_packets = []
 
+        self.received_values = []
+
         self.running = True
+
+        self.graph = GraphInstance()
+
+        # ===
 
         self.sock = socket.socket(socket.AF_INET, # Internet
                             socket.SOCK_DGRAM) # UDP
@@ -53,6 +63,8 @@ class Client():
 
             utils.log('[Client] Received: ' + str(message))
 
+            self.received_values.append(message.payload)
+
             #### testing only
             if len(self.lost_packets) > 5:
                 utils.log('[Client] Finished transmission because too many packets were lost!' + str(self.lost_packets))
@@ -74,10 +86,13 @@ client = Client(int(sys.argv[1]), sys.argv[2], int(sys.argv[3]))
 
 running = True
 
-print("Client Menu! Use 'exit' to exist stream and see stats!")
+ani = animation.FuncAnimation(client.graph.fig, client.graph.graph_animation, fargs=(1, client.received_values), interval=1000)
+plt.show()
+
+print("Client Menu! Use 'e' to exist stream and see stats!")
 while running:
     input_text = input()
-    if input_text == "exit":
+    if input_text == "e":
         print("Exiting stream...")
         client.running = False
         running = False

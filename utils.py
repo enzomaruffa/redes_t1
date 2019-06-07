@@ -4,8 +4,6 @@ from shutil import copyfile
 import sys
 import ntpath
 
-
-
 MESSAGE_SIZE = 8192
 
 def log(message):
