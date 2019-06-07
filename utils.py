@@ -18,10 +18,11 @@ def create_log_terminal(filepath, output_file, initTime, lastTime):
     output_file.write("<div class=\"quarter\">\n")
     output_file.write("<header>" + filename + "</header>\n")
     log_file = open(filepath, 'r')
-    while (initTime != lastTime):  
-        line_list = log_file.readlines()
+    line_list = log_file.readlines()
+    while (initTime != lastTime): 
         hasTimeInLine = False
         for line in line_list:
+            print('initTime ' + initTime + ' line ' + line)
             if initTime in line:
                 hasTimeInLine = True
                 output_file.write("<code>" + line.rstrip('\n') + "</code><br/>\n")
@@ -29,4 +30,5 @@ def create_log_terminal(filepath, output_file, initTime, lastTime):
             output_file.write("<code> </code><br/>\n")
         splitTime = initTime.split(':')
         initTime = ":".join([splitTime[0], splitTime[1], str(int(splitTime[2]) + 1)])
+        print('init time 2 ' + initTime)
     output_file.write("</div>\n")
