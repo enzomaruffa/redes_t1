@@ -12,17 +12,19 @@ class GraphInstance():
 
     def graph_animation(self, i, temp, ys):
         # Draw x and y lists
-        xs = list(range(0, len(ys)))
-            
+
+        y = ys.copy()
+
+        x = list(range(0, len(y)))
+        
         self.ax.clear()
         try:
-            self.ax.plot(xs, ys)
+            self.ax.plot(x, y)
         except Exception:
             None #casos de concorrência que estragam a animação
 
         # Format plot
         plt.xticks(rotation=45, ha='right')
-        self.ax.set_ylim([0, 100])
         plt.subplots_adjust(bottom=0.30)
         plt.title(self.title)
         plt.ylabel('Market Cap do Canil do Reino')
