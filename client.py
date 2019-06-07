@@ -15,12 +15,16 @@ from graph import GraphInstance
 
 class Client():
 
+    # Um cliente recebe uma porta para operar, um ip do servidor, uma porta do servidor e argumentos opcionais
     def __init__(self, port, server_ip, server_port, **kwargs):
         # ===
         output_file = kwargs.get('output_file', 'stdout')
         self.log_output_file = open(output_file, 'w')
         self.log_output_file.flush()
 
+        # === Inicialização do servidor
+
+        utils.log('[Cliente] Iniciando cliente...')
         self.client_address = (server_ip, port)
         # socket.gethostname()  
         self.server_address = (server_ip, server_port)
@@ -34,9 +38,9 @@ class Client():
 
         self.running = True
 
-        self.graph = GraphInstance(self.client_address)
+        self.graph = GraphInstance(self.client_address) # Instancialização da figura do gráfico
 
-        # ===
+        # === Criação do socket do cliente
 
         self.sock = socket.socket(socket.AF_INET, # Internet
                             socket.SOCK_DGRAM) # UDP
@@ -44,12 +48,13 @@ class Client():
         self.sock.setblocking(3)
         self.sock.bind(self.client_address)
 
-        # ====
+        # ==== Criação da Thread que ouve
  
         self.handler_thread = threading.Thread(target=self.receive_messages, args=())
         self.handler_thread.start()
 
-        sent = self.sock.sendto(Message(0, "sync", "").pack(), self.server_address)
+        utils.log('[Cliente] Envinado mensagem para o servidor...')
+        sent = self.sock.sendto(Message(0, "sync", "").pack(), self.server_address) # Envia uma mensagem para o servidor, pedindo para entrar na lista
 
         print("Menu do Cliente! Feche o gráfico para calcular as estatísticas")
 
@@ -58,32 +63,30 @@ class Client():
             utils.log('[Cliente] Aguardando mensagem...', optional_output_file=self.log_output_file)
             data, address = self.sock.recvfrom(utils.MESSAGE_SIZE)
             
-            if not running: #após cancelar, pode acabar pegando alguma mensagem ainda
+            if not running: # Após cancelar, pode acabar pegando alguma mensagem ainda. Assim, garantimos que será ignorada
                 break
 
             message = Message.unpack(data)
             self.received_packets += 1
 
             if message.message_type == "data":
-                #handles packet loss
-                if message.id < self.last_message_id:
-                    # delayed
+                # Tratamento da perda de padcotes
+                if message.id < self.last_message_id: # Nesse caso, a mensagem atrasou
                     self.delayed_packets.append(message.id)
-                elif message.id > self.last_message_id + 1:
-                    # lost a few between
+                elif message.id > self.last_message_id + 1: # Nesse caso, algumas mensagens foram perdidas no meio do caminho
                     if self.last_message_id != -1: #
-                        self.lost_packets += list(range(self.last_message_id + 1, message.id)) #creates a range [last + 1, message_id[
+                        self.lost_packets += list(range(self.last_message_id + 1, message.id)) # Cria uma lista do formato [last + 1, message_id[
 
                 self.received_values.append(message.payload)
     
-            self.last_message_id = message.id
+            self.last_message_id = message.id if message.id > self.last_message_id else self.last_message_id  # Atualiza o ID da última mensagem recebida
 
             utils.log('[Cliente] Recebido: ' + str(message), optional_output_file=self.log_output_file)
 
-            #### testing only
-            if len(self.lost_packets) > 5:
-                utils.log('[Cliente] Transmissão finalizada pois muitas mensagens foram perdidas! Mensagens perdidas: ' + str(self.lost_packets), optional_output_file=self.log_output_file)
-                break
+            #### Apenas para testes
+            # if len(self.lost_packets) > 5:
+            #     utils.log('[Cliente] Transmissão finalizada pois muitas mensagens foram perdidas! Mensagens perdidas: ' + str(self.lost_packets), optional_output_file=self.log_output_file)
+            #     break
 
     def create_statistics(self):
         utils.log('[Cliente] Estatísticas - Total de mensagens recebidas: ' +  str((self.received_packets)), optional_output_file=self.log_output_file)
@@ -96,7 +99,7 @@ class Client():
     def handle_close(self, evt):
         global running
 
-        self.sock.sendto(Message(1, "end", "").pack(), self.server_address)
+        self.sock.sendto(Message(1, "end", "").pack(), self.server_address) # Envia uma mensagem avisando para o servidor que está saindo
         
         print("[Cliente] Finalizando stream......")
         client.running = False
@@ -105,7 +108,7 @@ class Client():
         print("[Cliente] Finalizando streaming")
         print("[Cliente] Calculando regressão linear...")
 
-        regression_coefficient = np.polyfit(list(range(0, len(client.received_values))), client.received_values, 1)[0]
+        regression_coefficient = np.polyfit(list(range(0, len(client.received_values))), client.received_values, 1)[0] # Calcula a regressão linear dos dados
 
         if regression_coefficient < 1:
             print("\nCuidado! As ações vão cair no futuro.... Não recomendo a compra! O coeficiente de crescimento foi de ", regression_coefficient, "\n")
@@ -125,15 +128,14 @@ else:
     client = Client(int(sys.argv[1]), sys.argv[2], int(sys.argv[3]))
 running = True
 
-ani = animation.FuncAnimation(client.graph.fig, client.graph.graph_animation, fargs=(1, client.received_values), interval=100)
-client.graph.fig.canvas.mpl_connect('close_event', client.handle_close)
+ani = animation.FuncAnimation(client.graph.fig, client.graph.graph_animation, fargs=(1, client.received_values), interval=100) # Cria a animação do gráfico
+client.graph.fig.canvas.mpl_connect('close_event', client.handle_close) # Conecta o evento de fechar o gráfico com a função do cliente 'handle_close()'
 
 plt.show()
 
 while running:
     continue
 
-#client.handler_thread.join()
 client.create_statistics()
 
 client.sock.close()
