@@ -15,9 +15,14 @@ from graph import GraphInstance
 
 class Client():
 
-    def __init__(self, port, server_ip, server_port):
-        self.client_address = (socket.gethostname(), port)
-        
+    def __init__(self, port, server_ip, server_port, **kwargs):
+        # ===
+        output_file = kwargs.get('output_file', 'stdout')
+        self.log_output_file = open(output_file, 'w')
+        self.log_output_file.flush()
+
+        self.client_address = (server_ip, port)
+        # socket.gethostname()  
         self.server_address = (server_ip, server_port)
 
         self.last_message_id = -1
@@ -48,7 +53,7 @@ class Client():
 
     def receive_messages(self):
         while self.running:
-            utils.log('[Cliente] Aguardando mensagem...')
+            utils.log('[Cliente] Aguardando mensagem...', optional_output_file=self.log_output_file)
             data, address = self.sock.recvfrom(utils.MESSAGE_SIZE)
             
             if not running: #após cancelar, pode acabar pegando alguma mensagem ainda
@@ -68,31 +73,29 @@ class Client():
     
             self.last_message_id = message.id
 
-            utils.log('[Cliente] Recebido: ' + str(message))
+            utils.log('[Cliente] Recebido: ' + str(message), optional_output_file=self.log_output_file)
 
             self.received_values.append(message.payload)
 
             #### testing only
             if len(self.lost_packets) > 5:
-                utils.log('[Cliente] Transmissão finalizada pois muitas mensagens foram perdidas! Mensagens perdidas: ' + str(self.lost_packets))
+                utils.log('[Cliente] Transmissão finalizada pois muitas mensagens foram perdidas! Mensagens perdidas: ' + str(self.lost_packets), optional_output_file=self.log_output_file)
                 break
-            if (self.last_message_id > 200):
-                exit(0)
-
 
     def create_statistics(self):
-        utils.log('[Cliente] Estatísticas - Total de mensagens recebidas: ' +  str((self.received_packets)))
-        utils.log('[Cliente] Estatísticas - Total de mensagens recebidas no momento certo: ' +  str(self.received_packets - len(self.delayed_packets)))
-        utils.log('[Cliente] Estatísticas - Mensagens perdidas: ' +  str(len(self.lost_packets)))
-        utils.log('[Cliente] Estatísticas - Mensagens atrasadas: ' +  str(len(self.delayed_packets)))
+        utils.log('[Cliente] Estatísticas - Total de mensagens recebidas: ' +  str((self.received_packets)), optional_output_file=self.log_output_file)
+        utils.log('[Cliente] Estatísticas - Total de mensagens recebidas no momento certo: ' +  str(self.received_packets - len(self.delayed_packets)), optional_output_file=self.log_output_file)
+        utils.log('[Cliente] Estatísticas - Mensagens perdidas: ' +  str(len(self.lost_packets)), optional_output_file=self.log_output_file)
+        utils.log('[Cliente] Estatísticas - Mensagens atrasadas: ' +  str(len(self.delayed_packets)), optional_output_file=self.log_output_file)
 
 
-if len(sys.argv) != 4:
+if (len(sys.argv) != 4) and (len(sys.argv) != 5):
     print("Inicialização errada! Por favor, inicie o cliente com 'python3 client.py <porta_cliente> <ip_servidor> <porta_servidor>' ")
     exit(1)
-
-client = Client(int(sys.argv[1]), sys.argv[2], int(sys.argv[3]))
-
+if (len(sys.argv) == 5):
+    client = Client(int(sys.argv[1]), sys.argv[2], int(sys.argv[3]), output_file=sys.argv[4])
+else:
+    client = Client(int(sys.argv[1]), sys.argv[2], int(sys.argv[3]))
 running = True
 
 print("Menu do Cliente! Feche o gráfico para calcular as estatísticas")

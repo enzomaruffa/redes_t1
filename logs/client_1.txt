@@ -1,2 +1,77 @@
-[21:01:32] [Client] Waiting to receive message
-Client Menu! Use 'exit' to exist stream and see stats!
+[18:37:12] [Cliente] Aguardando mensagem...
+
+Menu do Cliente! Feche o gráfico para calcular as estatísticas
+[18:37:14] [Cliente] Recebido: [Mensagem] id: 1 | payload: 745.9389447524329
+
+
+[18:37:14] [Cliente] Aguardando mensagem...
+
+[18:37:17] [Cliente] Recebido: [Mensagem] id: 2 | payload: 808.218553807819
+
+
+[18:37:17] [Cliente] Aguardando mensagem...
+
+[18:37:20] [Cliente] Recebido: [Mensagem] id: 3 | payload: 830.5158741482815
+
+
+[18:37:20] [Cliente] Aguardando mensagem...
+
+[18:37:23] [Cliente] Recebido: [Mensagem] id: 4 | payload: 836.8292088363378
+
+
+[18:37:23] [Cliente] Aguardando mensagem...
+
+[18:37:26] [Cliente] Recebido: [Mensagem] id: 5 | payload: 901.5622586390065
+
+
+[18:37:26] [Cliente] Aguardando mensagem...
+
+[18:37:29] [Cliente] Recebido: [Mensagem] id: 6 | payload: 982.1433505844991
+
+
+[18:37:29] [Cliente] Aguardando mensagem...
+
+[18:37:32] [Cliente] Recebido: [Mensagem] id: 7 | payload: 963.0747023513344
+
+
+[18:37:32] [Cliente] Aguardando mensagem...
+
+[18:37:35] [Cliente] Recebido: [Mensagem] id: 8 | payload: 1054.7456214962222
+
+
+[18:37:35] [Cliente] Aguardando mensagem...
+
+[18:37:38] [Cliente] Recebido: [Mensagem] id: 9 | payload: 1168.769405603378
+
+
+[18:37:38] [Cliente] Aguardando mensagem...
+
+[18:37:41] [Cliente] Recebido: [Mensagem] id: 10 | payload: 1170.894273811459
+
+
+[18:37:41] [Cliente] Aguardando mensagem...
+
+[18:37:44] [Cliente] Recebido: [Mensagem] id: 11 | payload: 1086.1013568653634
+
+
+[18:37:44] [Cliente] Aguardando mensagem...
+
+[18:37:47] [Cliente] Recebido: [Mensagem] id: 12 | payload: 1055.1767231988767
+
+
+[18:37:47] [Cliente] Aguardando mensagem...
+
+Finalizando stream......
+Finalizando streaming
+Calculando regressão linear...
+
+COMPRE COMPRE COMPRE! As ações vão crescer muitooooo!! O coeficiente de crescimento foi de  767.2784456826985 
+
+[18:37:48] [Cliente] Estatísticas - Total de mensagens recebidas: 12
+
+[18:37:48] [Cliente] Estatísticas - Total de mensagens recebidas no momento certo: 12
+
+[18:37:48] [Cliente] Estatísticas - Mensagens perdidas: 0
+
+[18:37:48] [Cliente] Estatísticas - Mensagens atrasadas: 0
+

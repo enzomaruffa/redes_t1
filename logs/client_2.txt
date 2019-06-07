@@ -1,2 +1,37 @@
-[21:01:49] [Client] Waiting to receive message
-Client Menu! Use 'exit' to exist stream and see stats!
+[18:37:18] [Cliente] Aguardando mensagem...
+
+Menu do Cliente! Feche o gráfico para calcular as estatísticas
+[18:37:20] [Cliente] Recebido: [Mensagem] id: 3 | payload: 830.5158741482815
+
+
+[18:37:20] [Cliente] Aguardando mensagem...
+
+[18:37:23] [Cliente] Recebido: [Mensagem] id: 4 | payload: 836.8292088363378
+
+
+[18:37:23] [Cliente] Aguardando mensagem...
+
+[18:37:26] [Cliente] Recebido: [Mensagem] id: 5 | payload: 901.5622586390065
+
+
+[18:37:26] [Cliente] Aguardando mensagem...
+
+[18:37:29] [Cliente] Recebido: [Mensagem] id: 6 | payload: 982.1433505844991
+
+
+[18:37:29] [Cliente] Aguardando mensagem...
+
+Finalizando stream......
+Finalizando streaming
+Calculando regressão linear...
+
+COMPRE COMPRE COMPRE! As ações vão crescer muitooooo!! O coeficiente de crescimento foi de  809.8203511853328 
+
+[18:37:30] [Cliente] Estatísticas - Total de mensagens recebidas: 4
+
+[18:37:30] [Cliente] Estatísticas - Total de mensagens recebidas no momento certo: 4
+
+[18:37:30] [Cliente] Estatísticas - Mensagens perdidas: 0
+
+[18:37:30] [Cliente] Estatísticas - Mensagens atrasadas: 0
+

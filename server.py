@@ -9,9 +9,12 @@ import numpy as np
 import random
 
 class Server():
-    def __init__(self, server_receiver_port, server_sender_port, timeout, time_between_messages):
-
-        utils.log('[Servevidor] Iniciando servidor na porta ' + str(server_receiver_port))
+    def __init__(self, server_receiver_port, server_sender_port, timeout, time_between_messages, output_file='stdout'):
+        # ===
+        self.log_output_file = open(output_file, 'w')
+        self.log_output_file.flush()
+        
+        utils.log('[Servidor] Iniciando servidor na porta ' + str(server_receiver_port), optional_output_file=self.log_output_file)
 
         self.server_receiver_address = ('', server_receiver_port)
         self.server_sender_address = ('', server_sender_port)
@@ -59,11 +62,11 @@ class Server():
         try: 
             while self.running:
                 data, address = self.listener_sock.recvfrom(utils.MESSAGE_SIZE)
-                utils.log('[Servidor] Mensagem recebida: ' + data.decode())
+                utils.log('[Servidor] Mensagem recebida: ' + data.decode(), optional_output_file=self.log_output_file)
                 if address not in self.clients:
                     self.clients.append(address) #address example: ('127.0.0.1', 57121)
         except Exception:
-           utils.log('[Servidor] Fechando socket para novos clientes...')
+           utils.log('[Servidor] Fechando socket para novos clientes...', optional_output_file=self.log_output_file)
 
     def send_messages(self):
         try:
@@ -82,25 +85,26 @@ class Server():
                     self.sent_values.append(message_payload)
                     message = Message(self.last_message_id, message_payload)
                     for client in self.clients:
-                        utils.log('[Servidor] Enviando para o cliente (' + client[0] + ', ' + str(client[1]) + ') a mensagem: ' + str(message))
+                        utils.log('[Servidor] Enviando para o cliente (' + client[0] + ', ' + str(client[1]) + ') a mensagem: ' + str(message), optional_output_file=self.log_output_file)
                         sent = self.sender_sock.sendto(message.pack(), client)
 
                     self.last_message_id += 1
                     time.sleep(self.time_between_messages)
-                    # TESTE
-                    if (self.last_message_id > 50):
-                        exit(0)
-
         finally:
-            utils.log('[Servidor] Fechando socket de envio...')
+            utils.log('[Servidor] Fechando socket de envio...', optional_output_file=self.log_output_file)
             self.sender_sock.close()
 
 
-if len(sys.argv) != 4:
+if (len(sys.argv) != 4) and (len(sys.argv) != 5):
     print("Inicialização errada! Por favor, inicie o servidor com 'python3 server.py <porta_escuta_servidor> <porta_envio_servidor> <tempo_entre_mensagens>' ")
     exit(1)
 
-server = Server(int(sys.argv[1]), int(sys.argv[2]), 5, float(sys.argv[3]))
+if (len(sys.argv) == 5):
+    server = Server(int(sys.argv[1]), int(sys.argv[2]), 5, float(sys.argv[3]), output_file=sys.argv[4])
+    # log_output_file = open(sys.argv[4], 'w')
+else:
+    # log_output_file = open('stdout', 'w')
+    server = Server(int(sys.argv[1]), int(sys.argv[2]), 5, float(sys.argv[3]))
 
 running = True
 
@@ -110,12 +114,15 @@ try:
         input_text = input()
         if input_text == "p":
             print("Rodando stream!")
+            # utils.log("Rodando stream!", optional_output_file=log_output_file)
             server.streaming = True
         elif input_text == "s":
             print("Pausando stream!")
+            # utils.log("Pausando stream!", optional_output_file=log_output_file)
             server.streaming = False
         elif input_text == "f":
             print("Finalizando stream...")
+            # utils.log("Finalizando stream...", optional_output_file=log_output_file)
             server.listener_sock.close()
             server.running = False
             running = False
@@ -126,5 +133,7 @@ except KeyboardInterrupt:
     server.running = False
     running = False
     print("Finalizando stream...")
+    # utils.log("Finalizando stream...", optional_output_file=log_output_file)
 
 print("Streaming finalizado!")
+# utils.log("Streaming finalizado!", optional_output_file=log_output_file)
