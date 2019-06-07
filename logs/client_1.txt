@@ -1,0 +1,2 @@
+[21:01:32] [Client] Waiting to receive message
+Client Menu! Use 'exit' to exist stream and see stats!

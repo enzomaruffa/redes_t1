@@ -1,0 +1,7 @@
+[21:01:00] [Server] Starting server on port 5001
+Server Menu! Use 'play' to play stream, 'pause' to pause stream and 'finish' to end stream!
+[21:01:32] [Server] Received message: SYN
+[21:01:49] [Server] Received message: SYN
+[21:01:58] [Server] Received message: SYN
+Setting stream status to playing!
+[21:02:36] [Server] Closing sender socket
