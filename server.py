@@ -11,7 +11,7 @@ import random
 class Server():
     def __init__(self, server_receiver_port, server_sender_port, timeout, time_between_messages):
 
-        utils.log('[Servevidor] Iniciando servidor na porta ' + str(server_receiver_port))
+        utils.log('[Servidor] Iniciando servidor na porta ' + str(server_receiver_port))
 
         self.server_receiver_address = ('', server_receiver_port)
         self.server_sender_address = ('', server_sender_port)
@@ -59,28 +59,44 @@ class Server():
         try: 
             while self.running:
                 data, address = self.listener_sock.recvfrom(utils.MESSAGE_SIZE)
-                utils.log('[Servidor] Mensagem recebida: ' + data.decode())
-                if address not in self.clients:
-                    self.clients.append(address) #address example: ('127.0.0.1', 57121)
+                message = Message.unpack(data)
+
+                utils.log('[Servidor] Mensagem recebida: ' + str(message))
+
+                if message.message_type == "sync":
+                    if address not in self.clients:
+                        utils.log('[Servidor] Adicionando o cliente (' + address[0] + ', ' + str(address[1]) + ') na lista')
+                        self.clients.append(address) #address example: ('127.0.0.1', 57121)
+                elif message.message_type == "end":
+                    if address in self.clients:
+                        utils.log('[Servidor] Removendo o cliente (' + address[0] + ', ' + str(address[1]) + ') da lista')
+                        
+                        self.clients.remove(address) #address example: ('127.0.0.1', 57121)
+
+                        message = Message(self.last_message_id, "end", "bye!")
+                        self.last_message_id += 1
+                        self.listener_sock.sendto(message.pack(), address)
+
+                        utils.log('[Servidor] Enviando para o cliente (' + address[0] + ', ' + str(address[1]) + ') a mensagem: ' + str(message))
+                        
+                    
         except Exception:
            utils.log('[Servidor] Fechando socket para novos clientes...')
 
     def send_messages(self):
         try:
-            i = 0
             starting_value = random.randint(100,1000)
             while self.running:
                 if self.streaming:
 
                     message_payload = starting_value
 
-                    i+=1
                     starting_value += starting_value * np.random.normal(loc = 0, scale = 0.09)
-                    if starting_value <= 0:
+                    if starting_value <= 10:
                         starting_value += random.randint(1,10)
                     
                     self.sent_values.append(message_payload)
-                    message = Message(self.last_message_id, message_payload)
+                    message = Message(self.last_message_id, "data", message_payload)
                     for client in self.clients:
                         utils.log('[Servidor] Enviando para o cliente (' + client[0] + ', ' + str(client[1]) + ') a mensagem: ' + str(message))
                         sent = self.sender_sock.sendto(message.pack(), client)
