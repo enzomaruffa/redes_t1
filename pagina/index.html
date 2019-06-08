@@ -1,0 +1,157 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Redes II - Trabalho</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Trabalho - Redes 2</h1>
+        <p>Enzo Maruffa Moreira, Lucas Sampaio Franco. Trabalho para a disciplina de Redes II com o professor Elias Duarte.</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-12">
+            <h2>Metadados</h2>
+            <div class="">
+              <h3>Autores</h3>
+
+              <p>Enzo Maruffa Moreira - GRR20171626</p>
+              <p>Lucas Sampaio Franco - GRR 20166826</p>
+            </div>
+  
+          </div>
+
+        <div class="col-md-12">
+          <h2>Conceito</h2>
+          <p>O projeto consiste de uma simulação do preço das ações do "Canil de Outros Reinos"! </p>
+
+          <p> Assim, o servidor e cliente tem os seguintes papéis: </p>
+          <ul>
+            <li>servidor envia mensagens com os valores da ação naquele instante</li>
+            <li>cliente recebe e acompanha os preços das ações</li>
+          </ul>
+            
+          <p> Ao sair da transmissão, o cliente realiza uma regressão linear sobre os valores e determina se deve ou não comprar ações - ou seja, se ele acredita que o preço vai crescer ou cair :)</p>
+             
+        </div>
+
+        <div class="col-md-12">
+            <h2>Informações e decisões tomadas</h2>
+            <p>Como recomendado, o trabalho foi feito em <b>Python 3</b></p>
+            <p>Para melhor funcionamento do trabalho, as seguintes decisões foram tomadas:</p>
+            <ul>
+              <li>O servidor possui <b>dois sockets</b>, um responsável por receber novas conexões e outro por enviar mensagens. Cada um é controlado por uma thread diferente</li>
+              <li>O fluxo da comunicação é o seguinte:
+                <ol>
+                  <li>Servidor começa a executar e automaticamente a enviar mensagens (para uma lista vazia)</li>
+                  <li>Cliente começa a executar e envia uma mensagem do tipo "sync" para o servidor</li>
+                  <li>O servidor automaticamente adiciona ele na sua lista e começa a enviar novas mensagens</li>
+                  <li>[nesse meio tempo, novos clientes podem se conectar]</li>
+                  <li>Quando um cliente deseja sair da conexão, ele pode encerrar o processo fechando a imagem do gráfico que exibe as ações</li>
+                  <li>Ao fechar a conexão, o cliente envia uma mensagem para o servidor avisando que está saindo e o servidor responde, desbloqueando o socket</li>
+                  <li>O servidor continua executando até ser interrompido (ctrl-c, por exemplo)</li>
+                </ol>
+              </li>
+              <li>Uma classe que representa uma mensagem foi criada. Ela tem os seguintes atributos:
+                <ul>
+                  <li>ID - ID da mensagem</li>
+                  <li>Tipo - Tipo que varia entre {sync, data, end, self_end}</li>
+                  <li>Payload - Armazena os dados no caso da mensagem ser do tipo <b>data</b></li>
+                </ul>
+              </li>
+              <li>Para finalização do cliente e do servidor, uma última mensagem é reenviada - para desbloquear o socket. 
+                <ul>
+                  <li>No caso do servidor, seu socket de envio envia uma mensagem para seu socket de escuta. A mensagem é do tipo 'self_end'</li>
+                  <li>No caso do cliente, o servidor envia uma última mensagem confirmando que o cliente foi retirado de sua lista</li>
+                </ul>
+              </li>
+              <li>Para simular o comportamento da ação, utiliza-se um fator de crescimento ou decrescimento aleatório, com base em um valor sorteado de uma distribuição normal com média 0 e desvio padrão 0.09. Para exibir o gráfico, utilizou-se a biblioteca matplotlib</li>
+            </ul>
+          </div>
+        <div class="col-md-6">
+          <h2>Logs de execução</h2>
+          <p>O log a ser analisado é de um servidor que recebe mensagens de três clientes.</p>
+          <p>O fluxo de interações é o seguinte:</p>
+          <ol>
+            <li>Servidor começa a executar</li>
+            <li>Cliente 1 se conecta</li>
+            <li>Cliente 2 se conecta</li>
+            <li>Cliente 3 se conecta</li>
+            <li>Cliente 2 finaliza a conexão</li>
+            <li>Cliente 3 finaliza a conexão</li>
+            <li>Cliente 1 finaliza a conexão</li>
+            <li>Servidor termina o stream</li>
+          </ol>
+
+          <p>O mesmo log está apresentado em três formatos!</p>
+          <p>O primeiro apresenta o log das 4 entidades, separados em arquivos diferentes</p>
+          <p>O segundo apresenta uma visão simultânea dos 4 logs, com uma visualização semelhante a de um terminal</p>
+          <a class="btn btn-default" href="#" role="button">Log - Arquivos distintos &raquo;</a>
+          <a class="btn btn-default" href="#" role="button">Log - Terminal &raquo;</a>
+       </div>
+        <div class="col-md-6">
+          <h2>Arquivos do trabalho</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+
+        <div class="col-md-12">
+            <h2>Problemas conhecidos</h2>
+            <p>Um problema conhecido é com o final da execução do script, da parte do matplotlib. Existem algumas questões envolvendo a criação de gráficos animados, que fazem com que a atualização ocorra de maneira assíncrona. Assim, ao finalzar a execução, o próprio matplotlib encontra alguns erros com a figura deixando de existir </p>
+          </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p> Junho 2019</p>
+      </footer>
+    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+        <script src="js/vendor/bootstrap.min.js"></script>
+
+        <script src="js/main.js"></script>
+    </body>
+</html>
