@@ -1,0 +1,23 @@
+[21:05:29] [Cliente] Aguardando mensagem...
+[21:05:29] [Cliente] Recebido: [Mensagem] id: 4 | type: data | payload: 157.6691012577072
+
+[21:05:29] [Cliente] Aguardando mensagem...
+[21:05:30] [Cliente] Recebido: [Mensagem] id: 5 | type: data | payload: 164.34914958202597
+
+[21:05:30] [Cliente] Aguardando mensagem...
+[21:05:31] [Cliente] Recebido: [Mensagem] id: 6 | type: data | payload: 174.1797423759263
+
+[21:05:31] [Cliente] Aguardando mensagem...
+[21:05:32] [Cliente] Recebido: [Mensagem] id: 7 | type: data | payload: 184.25025858352464
+
+[21:05:32] [Cliente] Aguardando mensagem...
+[21:05:33] [Cliente] Recebido: [Mensagem] id: 8 | type: data | payload: 157.19507844847388
+
+[21:05:33] [Cliente] Aguardando mensagem...
+[21:05:34] [Cliente] Recebido: [Mensagem] id: 9 | type: data | payload: 159.53669251108832
+
+[21:05:34] [Cliente] Aguardando mensagem...
+[21:05:35] [Cliente] Estatísticas - Total de mensagens recebidas: 6
+[21:05:35] [Cliente] Estatísticas - Total de mensagens recebidas no momento certo: 6
+[21:05:35] [Cliente] Estatísticas - Mensagens perdidas: 0
+[21:05:35] [Cliente] Estatísticas - Mensagens atrasadas: 0

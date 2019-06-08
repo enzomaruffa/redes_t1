@@ -21,7 +21,7 @@ class Client():
         self.log_output_file = open(output_file, 'w')
         self.log_output_file.flush()
 
-        self.client_address = (server_ip, port)
+        self.client_address = ('', port)
         # socket.gethostname()  
         self.server_address = (server_ip, server_port)
 
@@ -42,13 +42,13 @@ class Client():
                             socket.SOCK_DGRAM) # UDP
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         self.sock.setblocking(3)
-        self.sock.bind(self.client_address)
+        self.sock.bind((self.client_address))
 
         # ====
  
         self.handler_thread = threading.Thread(target=self.receive_messages, args=())
         self.handler_thread.start()
-
+        print(self.server_address)
         sent = self.sock.sendto(Message(0, "sync", "").pack(), self.server_address)
 
         print("Menu do Cliente! Feche o gráfico para calcular as estatísticas")
