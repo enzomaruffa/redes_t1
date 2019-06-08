@@ -22,13 +22,15 @@ def create_log_terminal(filepath, output_file, initTime, lastTime):
     while (initTime != lastTime): 
         hasTimeInLine = False
         for line in line_list:
-            print('initTime ' + initTime + ' line ' + line)
             if initTime in line:
                 hasTimeInLine = True
                 output_file.write("<code>" + line.rstrip('\n') + "</code><br/>\n")
         if (hasTimeInLine == False):
             output_file.write("<code> </code><br/>\n")
         splitTime = initTime.split(':')
-        initTime = ":".join([splitTime[0], splitTime[1], str(int(splitTime[2]) + 1)])
-        print('init time 2 ' + initTime)
+        if (int(splitTime[2]) + 1) > 60:
+            initTime = ":".join([splitTime[0], str(int(splitTime[1]) + 1), '0'])            
+        else:
+            initTime = ":".join([splitTime[0], splitTime[1], str(int(splitTime[2]) + 1)])
+        print('init time and lasttime ' + initTime + ' ' + lastTime)
     output_file.write("</div>\n")
