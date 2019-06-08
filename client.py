@@ -99,21 +99,21 @@ class Client():
 
         self.sock.sendto(Message(1, "end", "").pack(), self.server_address) # Envia uma mensagem avisando para o servidor que está saindo
         
-        print("[Cliente] Finalizando stream......")
+        utils.log("[Cliente] Finalizando stream......", optional_output_file=self.log_output_file)
         client.running = False
         running = False
 
-        print("[Cliente] Finalizando streaming")
-        print("[Cliente] Calculando regressão linear...")
+        utils.log("[Cliente] Finalizando streaming", optional_output_file=self.log_output_file)
+        utils.log("[Cliente] Calculando regressão linear...", optional_output_file=self.log_output_file)
 
         regression_coefficient = np.polyfit(list(range(0, len(client.received_values))), client.received_values, 1)[0] # Calcula a regressão linear dos dados
 
         if regression_coefficient < 1:
-            print("\nCuidado! As ações vão cair no futuro.... Não recomendo a compra! O coeficiente de crescimento foi de ", regression_coefficient, "\n")
+            utils.log("\nCuidado! As ações vão cair no futuro.... Não recomendo a compra! O coeficiente de crescimento foi de ", regression_coefficient, "\n", optional_output_file=self.log_output_file)
         elif regression_coefficient > 0:
-            print("\nCOMPRE COMPRE COMPRE! As ações vão crescer muitooooo!! O coeficiente de crescimento foi de ", regression_coefficient, "\n")
+            utils.log("\nCOMPRE COMPRE COMPRE! As ações vão crescer muitooooo!! O coeficiente de crescimento foi de ", regression_coefficient, "\n", optional_output_file=self.log_output_file)
         else:
-            print("\nHmmm, você que sabe. As ações ficarão estáveis! O coeficiente de crescimento foi de ", regression_coefficient, "\n")
+            utils.log("\nHmmm, você que sabe. As ações ficarão estáveis! O coeficiente de crescimento foi de ", regression_coefficient, "\n", optional_output_file=self.log_output_file)
 
 
 
@@ -138,4 +138,4 @@ client.create_statistics()
 
 client.sock.close()
 
-print("========= FIM DA EXECUÇÃO =========\n\n")
+utils.log("========= FIM DA EXECUÇÃO =========\n\n", )
