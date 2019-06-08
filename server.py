@@ -126,15 +126,15 @@ if (len(sys.argv) != 4) and (len(sys.argv) != 5):
 
 if (len(sys.argv) == 5):
     server = Server(int(sys.argv[1]), int(sys.argv[2]), 5, float(sys.argv[3]), output_file=sys.argv[4])
-    # log_output_file = open(sys.argv[4], 'w')
+    log_output_file = open(sys.argv[4], 'w')
 else:
-    # log_output_file = open('stdout', 'w')
+    log_output_file = open('stdout', 'w')
     server = Server(int(sys.argv[1]), int(sys.argv[2]), 5, float(sys.argv[3]))
 
 running = True
 
 def close_stuff():
-    utils.log("Finalizando stream...", optional_output_file=self.log_output_file)
+    utils.log("Finalizando stream...", optional_output_file=log_output_file)
     server.listener_sock.close()
     server.running = False
     running = False
@@ -160,5 +160,5 @@ except KeyboardInterrupt:
     close_stuff()
     # utils.log("Finalizando stream...", optional_output_file=log_output_file)
 
-utils.log("Streaming finalizado!", optional_output_file=self.log_output_file)
-# utils.log("Streaming finalizado!", optional_output_file=log_output_file)
+# utils.log("Streaming finalizado!")
+utils.log("Streaming finalizado!", optional_output_file=log_output_file)

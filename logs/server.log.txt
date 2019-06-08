@@ -1,146 +1,96 @@
-[21:13:20] [Servidor] Iniciando servidor na porta 5001
-[21:13:23] [Servidor] Mensagem recebida: [Mensagem] id: 0 | type: sync | payload: 
-
-[21:13:23] [Servidor] Adicionando o cliente (10.254.225.29, 4000) na lista
-[21:13:24] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 3 | type: data | payload: 724.940897963343
-
-[21:13:25] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 4 | type: data | payload: 785.606815941002
-
-[21:13:26] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 5 | type: data | payload: 805.0692670203313
-
-[21:13:27] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 6 | type: data | payload: 883.3755887789345
-
-[21:13:28] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 7 | type: data | payload: 962.9779822280452
-
-[21:13:29] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 8 | type: data | payload: 1028.1170048190024
-
-[21:13:30] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 9 | type: data | payload: 856.6831981463284
-
-[21:13:31] [Servidor] Mensagem recebida: [Mensagem] id: 0 | type: sync | payload: 
-
-[21:13:31] [Servidor] Adicionando o cliente (10.254.225.28, 4562) na lista
-[21:13:31] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 10 | type: data | payload: 834.5899073563614
-
-[21:13:31] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 10 | type: data | payload: 834.5899073563614
-
-[21:13:32] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 11 | type: data | payload: 776.0956784339112
-
-[21:13:32] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 11 | type: data | payload: 776.0956784339112
-
-[21:13:33] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 12 | type: data | payload: 784.8180979690227
-
-[21:13:33] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 12 | type: data | payload: 784.8180979690227
-
-[21:13:34] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 13 | type: data | payload: 759.137740865237
-
-[21:13:34] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 13 | type: data | payload: 759.137740865237
-
-[21:13:34] [Servidor] Mensagem recebida: [Mensagem] id: 0 | type: sync | payload: 
-
-[21:13:34] [Servidor] Adicionando o cliente (10.254.225.26, 6007) na lista
-[21:13:35] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 14 | type: data | payload: 797.4145843926425
-
-[21:13:35] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 14 | type: data | payload: 797.4145843926425
-
-[21:13:35] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 14 | type: data | payload: 797.4145843926425
-
-[21:13:36] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 15 | type: data | payload: 696.740624386837
-
-[21:13:36] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 15 | type: data | payload: 696.740624386837
-
-[21:13:36] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 15 | type: data | payload: 696.740624386837
-
-[21:13:37] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 16 | type: data | payload: 661.1894099059424
-
-[21:13:37] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 16 | type: data | payload: 661.1894099059424
-
-[21:13:37] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 16 | type: data | payload: 661.1894099059424
-
-[21:13:38] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 17 | type: data | payload: 625.4386335197777
-
-[21:13:38] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 17 | type: data | payload: 625.4386335197777
-
-[21:13:38] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 17 | type: data | payload: 625.4386335197777
-
-[21:13:39] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 18 | type: data | payload: 629.5147480897105
-
-[21:13:39] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 18 | type: data | payload: 629.5147480897105
-
-[21:13:39] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 18 | type: data | payload: 629.5147480897105
-
-[21:13:40] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 19 | type: data | payload: 786.081337339867
-
-[21:13:40] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 19 | type: data | payload: 786.081337339867
-
-[21:13:40] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 19 | type: data | payload: 786.081337339867
-
-[21:13:41] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 20 | type: data | payload: 791.5922887856773
-
-[21:13:41] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 20 | type: data | payload: 791.5922887856773
-
-[21:13:41] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 20 | type: data | payload: 791.5922887856773
-
-[21:13:42] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 21 | type: data | payload: 803.5397797200284
-
-[21:13:42] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 21 | type: data | payload: 803.5397797200284
-
-[21:13:42] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 21 | type: data | payload: 803.5397797200284
-
-[21:13:42] [Servidor] Mensagem recebida: [Mensagem] id: 1 | type: end | payload: 
-
-[21:13:42] [Servidor] Removendo o cliente (10.254.225.28, 4562) da lista
-[21:13:42] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 22 | type: end | payload: bye!
-
-[21:13:43] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 23 | type: data | payload: 846.9670999938701
-
-[21:13:43] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 23 | type: data | payload: 846.9670999938701
-
-[21:13:44] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 24 | type: data | payload: 882.1385606003882
-
-[21:13:44] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 24 | type: data | payload: 882.1385606003882
-
-[21:13:45] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 25 | type: data | payload: 850.2890540977087
-
-[21:13:45] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 25 | type: data | payload: 850.2890540977087
-
-[21:13:46] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 26 | type: data | payload: 935.3859054822286
-
-[21:13:46] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 26 | type: data | payload: 935.3859054822286
-
-[21:13:47] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 27 | type: data | payload: 958.0118982396492
-
-[21:13:47] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 27 | type: data | payload: 958.0118982396492
-
-[21:13:48] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 28 | type: data | payload: 1002.1768167378855
-
-[21:13:48] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 28 | type: data | payload: 1002.1768167378855
-
-[21:13:49] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 29 | type: data | payload: 1071.9896443840576
-
-[21:13:49] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 29 | type: data | payload: 1071.9896443840576
-
-[21:13:49] [Servidor] Mensagem recebida: [Mensagem] id: 1 | type: end | payload: 
-
-[21:13:49] [Servidor] Removendo o cliente (10.254.225.26, 6007) da lista
-[21:13:49] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 30 | type: end | payload: bye!
-
-[21:13:50] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 31 | type: data | payload: 1087.7573904111496
-
-[21:13:51] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 32 | type: data | payload: 1081.5751806920352
-
-[21:13:52] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 33 | type: data | payload: 1239.7829298817499
-
-[21:13:53] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 34 | type: data | payload: 1192.8952724950354
-
-[21:13:54] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 35 | type: data | payload: 1024.9183555306408
-
-[21:13:55] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 36 | type: data | payload: 941.9475691592053
-
-[21:13:55] [Servidor] Mensagem recebida: [Mensagem] id: 1 | type: end | payload: 
-
-[21:13:55] [Servidor] Removendo o cliente (10.254.225.29, 4000) da lista
-[21:13:55] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 37 | type: end | payload: bye!
-
-[21:14:00] [Servidor] Fechando socket de envio...
-[21:14:00] [Servidor] Mensagem recebida: [Mensagem] id: 0 | type: self_end | payload: Fechando conexão!!
-
+[21:21:33] [Servidor] Iniciando servidor na porta 5001
+[21:21:48] [Servidor] Mensagem recebida: [Mensagem] id: 0 | type: sync | payload: 
+[21:21:48] [Servidor] Adicionando o cliente (10.254.225.29, 4000) na lista
+[21:21:48] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 14 | type: data | payload: 372.4523174815982
+[21:21:49] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 15 | type: data | payload: 365.34443318520334
+[21:21:50] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 16 | type: data | payload: 371.19420843884217
+[21:21:51] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 17 | type: data | payload: 373.460708868261
+[21:21:52] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 18 | type: data | payload: 382.7616112068638
+[21:21:53] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 19 | type: data | payload: 359.99685848823174
+[21:21:54] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 20 | type: data | payload: 354.2642984797509
+[21:21:55] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 21 | type: data | payload: 350.3201134595437
+[21:21:56] [Servidor] Mensagem recebida: [Mensagem] id: 0 | type: sync | payload: 
+[21:21:56] [Servidor] Adicionando o cliente (10.254.225.28, 4562) na lista
+[21:21:56] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 22 | type: data | payload: 395.1813357804326
+[21:21:56] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 22 | type: data | payload: 395.1813357804326
+[21:21:57] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 23 | type: data | payload: 358.4783604926147
+[21:21:57] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 23 | type: data | payload: 358.4783604926147
+[21:21:58] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 24 | type: data | payload: 356.16173827564137
+[21:21:58] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 24 | type: data | payload: 356.16173827564137
+[21:21:59] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 25 | type: data | payload: 345.0435256199694
+[21:21:59] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 25 | type: data | payload: 345.0435256199694
+[21:22:00] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 26 | type: data | payload: 307.7386868167987
+[21:22:00] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 26 | type: data | payload: 307.7386868167987
+[21:22:01] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 27 | type: data | payload: 311.82572791215205
+[21:22:01] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 27 | type: data | payload: 311.82572791215205
+[21:22:02] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 28 | type: data | payload: 323.0174047661349
+[21:22:02] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 28 | type: data | payload: 323.0174047661349
+[21:22:03] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 29 | type: data | payload: 337.31797037369466
+[21:22:03] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 29 | type: data | payload: 337.31797037369466
+[21:22:04] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 30 | type: data | payload: 318.7220922818644
+[21:22:04] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 30 | type: data | payload: 318.7220922818644
+[21:22:05] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 31 | type: data | payload: 323.1194691260973
+[21:22:05] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 31 | type: data | payload: 323.1194691260973
+[21:22:06] [Servidor] Mensagem recebida: [Mensagem] id: 0 | type: sync | payload: 
+[21:22:06] [Servidor] Adicionando o cliente (10.254.225.26, 6007) na lista
+[21:22:06] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 32 | type: data | payload: 328.4715827915722
+[21:22:06] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 32 | type: data | payload: 328.4715827915722
+[21:22:06] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 32 | type: data | payload: 328.4715827915722
+[21:22:07] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 33 | type: data | payload: 374.6771169363425
+[21:22:07] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 33 | type: data | payload: 374.6771169363425
+[21:22:07] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 33 | type: data | payload: 374.6771169363425
+[21:22:08] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 34 | type: data | payload: 393.8587055202935
+[21:22:08] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 34 | type: data | payload: 393.8587055202935
+[21:22:08] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 34 | type: data | payload: 393.8587055202935
+[21:22:09] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 35 | type: data | payload: 385.74085304211343
+[21:22:09] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 35 | type: data | payload: 385.74085304211343
+[21:22:09] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 35 | type: data | payload: 385.74085304211343
+[21:22:10] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 36 | type: data | payload: 399.08814321047856
+[21:22:10] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 36 | type: data | payload: 399.08814321047856
+[21:22:10] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 36 | type: data | payload: 399.08814321047856
+[21:22:11] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 37 | type: data | payload: 400.9278394780447
+[21:22:11] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 37 | type: data | payload: 400.9278394780447
+[21:22:11] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 37 | type: data | payload: 400.9278394780447
+[21:22:12] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 38 | type: data | payload: 420.5909594112058
+[21:22:12] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 38 | type: data | payload: 420.5909594112058
+[21:22:12] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 38 | type: data | payload: 420.5909594112058
+[21:22:13] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 39 | type: data | payload: 405.95589657741806
+[21:22:13] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 39 | type: data | payload: 405.95589657741806
+[21:22:13] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 39 | type: data | payload: 405.95589657741806
+[21:22:14] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 40 | type: data | payload: 368.4196662409819
+[21:22:14] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 40 | type: data | payload: 368.4196662409819
+[21:22:14] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 40 | type: data | payload: 368.4196662409819
+[21:22:15] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 41 | type: data | payload: 338.62455297783936
+[21:22:15] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 41 | type: data | payload: 338.62455297783936
+[21:22:15] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 41 | type: data | payload: 338.62455297783936
+[21:22:16] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 42 | type: data | payload: 317.56275822102447
+[21:22:16] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 42 | type: data | payload: 317.56275822102447
+[21:22:16] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 42 | type: data | payload: 317.56275822102447
+[21:22:17] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 43 | type: data | payload: 301.0836194539072
+[21:22:17] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 43 | type: data | payload: 301.0836194539072
+[21:22:17] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 43 | type: data | payload: 301.0836194539072
+[21:22:18] [Servidor] Mensagem recebida: [Mensagem] id: 1 | type: end | payload: 
+[21:22:18] [Servidor] Removendo o cliente (10.254.225.28, 4562) da lista
+[21:22:18] [Servidor] Enviando para o cliente (10.254.225.28, 4562) a mensagem: [Mensagem] id: 44 | type: end | payload: bye!
+[21:22:18] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 45 | type: data | payload: 319.6294223672415
+[21:22:18] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 45 | type: data | payload: 319.6294223672415
+[21:22:19] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 46 | type: data | payload: 301.43490074475073
+[21:22:19] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 46 | type: data | payload: 301.43490074475073
+[21:22:20] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 47 | type: data | payload: 321.50504306857755
+[21:22:20] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 47 | type: data | payload: 321.50504306857755
+[21:22:21] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 48 | type: data | payload: 361.2912172420107
+[21:22:21] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 48 | type: data | payload: 361.2912172420107
+[21:22:22] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 49 | type: data | payload: 313.11858377696035
+[21:22:22] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 49 | type: data | payload: 313.11858377696035
+[21:22:23] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 50 | type: data | payload: 287.607074204086
+[21:22:23] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 50 | type: data | payload: 287.607074204086
+[21:22:23] [Servidor] Mensagem recebida: [Mensagem] id: 1 | type: end | payload: 
+[21:22:23] [Servidor] Removendo o cliente (10.254.225.26, 6007) da lista
+[21:22:23] [Servidor] Enviando para o cliente (10.254.225.26, 6007) a mensagem: [Mensagem] id: 51 | type: end | payload: bye!
+[21:22:24] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 52 | type: data | payload: 286.3253330781385
+[21:22:25] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 53 | type: data | payload: 299.75826788466276
+[21:22:25] [Servidor] Mensagem recebida: [Mensagem] id: 1 | type: end | payload: 
+[21:22:25] [Servidor] Removendo o cliente (10.254.225.29, 4000) da lista
+[21:22:25] [Servidor] Enviando para o cliente (10.254.225.29, 4000) a mensagem: [Mensagem] id: 54 | type: end | payload: bye!
+[21:22:29] [Servidor] Fechando socket de envio...
+[21:22:29] [Servidor] Mensagem recebida: [Mensagem] id: 0 | type: self_end | payload: Fechando conexão!!
