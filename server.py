@@ -134,7 +134,7 @@ else:
 running = True
 
 def close_stuff():
-    print("Finalizando stream...")
+    utils.log("Finalizando stream...", optional_output_file=self.log_output_file)
     server.listener_sock.close()
     server.running = False
     running = False
@@ -160,5 +160,5 @@ except KeyboardInterrupt:
     close_stuff()
     # utils.log("Finalizando stream...", optional_output_file=log_output_file)
 
-print("Streaming finalizado!")
+utils.log("Streaming finalizado!", optional_output_file=self.log_output_file)
 # utils.log("Streaming finalizado!", optional_output_file=log_output_file)
