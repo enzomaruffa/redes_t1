@@ -23,5 +23,5 @@ class Message():
     # O overload do método __str__ serve para imprimir a mensagem formatada
     def __str__(self):
         rep = "[Mensagem] "
-        rep += "id: " + str(self.id) + " | type: "+ str(self.message_type) +" | payload: " + str(self.payload) + "\n"
+        rep += "id: " + str(self.id) + " | type: "+ str(self.message_type) +" | payload: " + str(self.payload)
         return rep
