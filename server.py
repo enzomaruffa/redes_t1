@@ -74,8 +74,6 @@ class Server():
                 message = Message.unpack(data)
                 utils.log('[Servidor] Mensagem recebida: ' + str(message), optional_output_file=self.log_output_file)
 
-                utils.log('[Servidor] Mensagem recebida: ' + str(message))
-
                 if message.message_type == "sync": # Se for um novo cliente, adiciona ele na lista
                     if address not in self.clients:
                         utils.log('[Servidor] Adicionando o cliente (' + address[0] + ', ' + str(address[1]) + ') na lista', optional_output_file=self.log_output_file)
@@ -118,6 +116,7 @@ class Server():
                     time.sleep(self.time_between_messages)
         finally:
             utils.log('[Servidor] Fechando socket de envio...', optional_output_file=self.log_output_file) # Caso a execução encerre, fecha o socket
+            self.sender_sock.sendto(Message(0, "self_end", "Fechando conexão!!").pack(), self.server_receiver_address)
             self.sender_sock.close()
 
 
@@ -134,7 +133,14 @@ else:
 
 running = True
 
+def close_stuff():
+    print("Finalizando stream...")
+    server.listener_sock.close()
+    server.running = False
+    running = False
+
 print("Menu do servidor! Use 'p' para despausar o stream, 's' para pausar e 'f' para finalizar!")
+
 try:
     while running:
         input_text = input()
@@ -147,18 +153,11 @@ try:
             # utils.log("Pausando stream!", optional_output_file=log_output_file)
             server.streaming = False
         elif input_text == "f":
-            print("Finalizando stream...")
-            # utils.log("Finalizando stream...", optional_output_file=log_output_file)
-            server.listener_sock.close()
-            server.running = False
-            running = False
+            close_stuff()
         else: 
             print("Comando desconhecido")
 except KeyboardInterrupt:
-    server.listener_sock.close()
-    server.running = False
-    running = False
-    print("Finalizando stream...")
+    close_stuff()
     # utils.log("Finalizando stream...", optional_output_file=log_output_file)
 
 print("Streaming finalizado!")
